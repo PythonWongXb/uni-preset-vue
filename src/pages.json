@@ -5,6 +5,12 @@
 			"style": {
 				"navigationBarTitleText": "uni-app"
 			}
+		},
+		{
+			"path": "pages/login/index",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
 		}
 	],
 	"globalStyle": {
@@ -12,5 +18,22 @@
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
-	}
+	},
+    "tabBar": {
+        "list": [
+            {
+                "pagePath": "pages/index/index",
+                "text": "寻标宝"
+            },
+            {
+                "pagePath": "pages/login/index",
+                "text": "我的"
+            }
+        ],
+        "selectedColor": "#4A75F6",
+        "color": "#1E293B",
+        "backgroundColor":"#fff",
+        "borderStyle":"black",
+        "fontSize":"12px"
+    }
 }
