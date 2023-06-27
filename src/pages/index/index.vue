@@ -2,18 +2,28 @@
   <view class="content">
     12
     <view class="text-area">
-          <canvas canvas-id="column" id="column" class="charts" @touchend="tap"
+          <canvas canvas-id="column" id="column" class="charts" @click="tap"
           />
     </view>
   </view>
 </template>
 
 <script setup lang="ts">
+
 import uCharts from '@qiun/ucharts';
 import { onMounted, ref } from 'vue'
-const title = ref('Hello')
 
-const uChartsInstance = {};
+type TTargetPlus = Pick<MouseEvent, 'target'> & { id: string } | null;
+
+interface IData {
+    categories: string[];
+    series: {
+        name: string;
+        data: number[];
+    }[];
+}
+
+const uChartsInstance: Record<string, IEchartInstance> = {};
 const cWidth = 750;
 const cHeight = 500;
 
@@ -21,7 +31,7 @@ const getServerData = () => {
       //模拟从服务器获取数据时的延时
       setTimeout(() => {
         //模拟服务器返回数据，如果数据格式和标准格式不同，需自行按下面的格式拼接
-        let res = {
+        const res: IData = {
             categories: ["2016","2017","2018","2019","2020","2021"],
             series: [
               {
@@ -38,9 +48,8 @@ const getServerData = () => {
       }, 500);
     }
     
-    const drawCharts = (id, data) => {
+    const drawCharts = (id: string, data: IData) => {
       const ctx = uni.createCanvasContext(id);
-      console.log(uCharts, id, data)
       uChartsInstance[id] = new uCharts({
         type: "column",
         context: ctx,
@@ -64,9 +73,12 @@ const getServerData = () => {
         }
       });
     }
-    const tap = (e) => {
-      uChartsInstance[e.target.id].touchLegend(e);
-      uChartsInstance[e.target.id].showToolTip(e);
+    const tap = (e: MouseEvent) => {
+      const target = e.target as TTargetPlus;
+      if (target?.id) {
+        uChartsInstance[target.id].touchLegend(e);
+        uChartsInstance[target.id].showToolTip(e);
+      }
     }
 
 onMounted(() => {
