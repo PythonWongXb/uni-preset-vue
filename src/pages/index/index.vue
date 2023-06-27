@@ -2,8 +2,11 @@
   <view class="content">
     12
     <view class="text-area">
-          <canvas canvas-id="column" id="column" class="charts" @click="tap"
-          />
+    <canvas canvas-id="column" id="column" class="charts" @click="tap"
+    />
+    34
+    <canvas canvas-id="circle" id="circle" class="charts_circle" @click="tap"
+    />
     </view>
   </view>
 </template>
@@ -48,47 +51,103 @@ const getServerData = () => {
       }, 500);
     }
     
-    const drawCharts = (id: string, data: IData) => {
-      const ctx = uni.createCanvasContext(id);
-      uChartsInstance[id] = new uCharts({
-        type: "column",
+const drawCharts = (id: string, data: IData) => {
+    const ctx = uni.createCanvasContext(id);
+    uChartsInstance[id] = new uCharts({
+    type: "column",
+    context: ctx,
+    width: cWidth,
+    height: cHeight,
+    categories: data.categories,
+    series: data.series,
+    animation: true,
+    background: "#FFFFFF",
+    padding: [15,15,0,5],
+    xAxis: {
+        disableGrid: true
+    },
+    yAxis: {
+        data: [{min: 0}]
+    },
+    extra: {
+        column: {
+        type: "group"
+        }
+    }
+    });
+}
+const drawChartsCircle = (id: string, data: IData) => {
+    const ctx = uni.createCanvasContext(id);
+    uChartsInstance[id] = new uCharts({
+        type: "arcbar",
         context: ctx,
-        width: cWidth,
-        height: cHeight,
-        categories: data.categories,
+        width: 400,
+        height: 300,
         series: data.series,
         animation: true,
         background: "#FFFFFF",
-        padding: [15,15,0,5],
-        xAxis: {
-          disableGrid: true
+        color: ["#1890FF","#91CB74","#FAC858","#EE6666","#73C0DE","#3CA272","#FC8452","#9A60B4","#ea7ccc"],
+        padding: undefined,
+        title: {
+        name: "80%",
+        fontSize: 35,
+        color: "#2fc25b"
         },
-        yAxis: {
-          data: [{min: 0}]
+        subtitle: {
+        name: "正确率",
+        fontSize: 25,
+        color: "#666666"
         },
         extra: {
-          column: {
-            type: "group"
-          }
+        arcbar: {
+            type: "circle",
+            width: 12,
+            backgroundColor: "#E9E9E9",
+            startAngle: 1.5,
+            endAngle: 0.25,
+            gap: 2
         }
-      });
+        }
+    });
+}
+const tap = (e: MouseEvent) => {
+    const target = e.target as TTargetPlus;
+    if (target?.id) {
+    uChartsInstance[target.id].touchLegend(e);
+    uChartsInstance[target.id].showToolTip(e);
     }
-    const tap = (e: MouseEvent) => {
-      const target = e.target as TTargetPlus;
-      if (target?.id) {
-        uChartsInstance[target.id].touchLegend(e);
-        uChartsInstance[target.id].showToolTip(e);
-      }
-    }
+}
+
+function getServerDataCircle() {
+  //模拟从服务器获取数据时的延时
+  setTimeout(() => {
+    //模拟服务器返回数据，如果数据格式和标准格式不同，需自行按下面的格式拼接
+    const res: any = {
+        series: [
+          {
+            name: "正确率",
+            color: "#2fc25b",
+            data: 0.8
+          }
+        ]
+      };
+    drawChartsCircle('circle', res);
+  }, 500);
+}
 
 onMounted(() => {
     getServerData();
+    getServerDataCircle();
 })
 </script>
 
 <style scoped>
-  .charts{
+  .charts {
     width: 750rpx;
     height: 500rpx;
+  }
+  .charts_circle {
+    width: 400px;
+    height: 300px;
   }
 </style>
