@@ -8,6 +8,12 @@
     <canvas canvas-id="circle" id="circle" class="charts_circle" @click="tap"
     />
     </view>
+    <view>123</view>
+    <u-icon name="level"></u-icon>
+    <u-icon name="photo"></u-icon>
+	  <u-number-box v-model="value"></u-number-box>
+
+    <u-button text="月落"></u-button>
   </view>
 </template>
 
@@ -29,6 +35,7 @@ interface IData {
 const uChartsInstance: Record<string, IEchartInstance> = {};
 const cWidth = 750;
 const cHeight = 500;
+const value = ref(10);
 
 const getServerData = () => {
       //模拟从服务器获取数据时的延时

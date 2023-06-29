@@ -12,3 +12,6 @@ declare module '@qiun/ucharts' {
     b = new foo
     export = b as MyInterface3
 }
+declare module 'uview-plus' {
+  export = b as Plugin<[]>
+}
