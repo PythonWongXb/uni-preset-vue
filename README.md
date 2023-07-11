@@ -1,2 +1,4 @@
-# uni-preset-vue
-uni-app preset for vue
+# 启动
+pnpm dev:mp-weixin
+
+# 组件库
