@@ -1,10 +1,16 @@
 <template>
     <view class='flipper' style="">
         <view class='front'>
-            <text class='add-journalBook-text'>新建手帐本</text>
+            video/imgs
+        </view>
+        <view class='front'>
+            input，左侧挂，点击打开
         </view>
         <view class='back'>
-            <view class='input-title'>手帐本名称：</view>
+            tags
+        </view>
+        <view class='back'>
+            prompt
         </view>
     </view>
 </template>
