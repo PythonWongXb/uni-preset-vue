@@ -6,6 +6,12 @@
 	},
 	"pages": [
 		{
+			"path": "pages/index/subPage",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
+		},
+		{
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "uni-app"
@@ -27,8 +33,12 @@
     "tabBar": {
         "list": [
             {
+                "pagePath": "pages/index/subPage",
+                "text": "what"
+            },
+            {
                 "pagePath": "pages/index/index",
-                "text": "寻标宝"
+                "text": "bus"
             },
             {
                 "pagePath": "pages/login/index",
